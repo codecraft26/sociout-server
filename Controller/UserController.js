@@ -3,6 +3,9 @@ const User =require("../Models/UserModel")
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const sendToken = require("../utils/JwtToken");
 
+const ErrorHander=require('../utils/ErrorHander')
+
+
 exports.createUser = catchAsyncErrors(async (req, res, next) => {
 
 
@@ -61,3 +64,47 @@ exports.logout = catchAsyncErrors(async (req, res, next) => {
 }
 
 );
+
+// Get User Detail
+exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+
+
+  const {email ,name ,role} = user;
+  if (!user) {
+    return next(
+      new ErrorHander(404,`User does not found with id: ${req.params.id}`)
+    );
+  }
+
+  res.status(200).json({
+    success: true,
+   user: {email ,name ,role,createdAt:user.createdAt}
+  });
+});
+
+exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
+  const users = await User.find();
+
+  res.status(200).json({
+    success: true,
+    users,
+  });
+}
+);
+
+exports.getUserByEmail = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findOne({ email: req.params.email });
+
+  if (!user) {
+    res.status(404).json({
+      success: false,
+      message: "User not found with this email",
+    });
+  }
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
+});
