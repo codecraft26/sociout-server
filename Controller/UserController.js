@@ -3,7 +3,7 @@ const User =require("../Models/UserModel")
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const sendToken = require("../utils/JwtToken");
 
-const ErrorHander=require("../utils/ErrorHander")
+const ErrorHander=require('../utils/ErrorHander')
 
 
 exports.createUser = catchAsyncErrors(async (req, res, next) => {
@@ -73,7 +73,7 @@ exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
   const {email ,name ,role} = user;
   if (!user) {
     return next(
-      new ErrorHander(`User does not exist with Id: ${req.params.id}`)
+      new ErrorHander(404,`User does not found with id: ${req.params.id}`)
     );
   }
 
@@ -97,9 +97,10 @@ exports.getUserByEmail = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findOne({ email: req.params.email });
 
   if (!user) {
-    return next(
-      new ErrorHander(`User does not exist with email: ${req.params.email}`)
-    );
+    res.status(404).json({
+      success: false,
+      message: "User not found with this email",
+    });
   }
 
   res.status(200).json({

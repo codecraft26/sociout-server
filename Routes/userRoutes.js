@@ -9,7 +9,7 @@ router.post('/login', loginUser);
 
 router.get('/logout',logout);
 
-router.route('/profile/:id').get(isAuthenticatedUser,getUserDetails);
+router.route('/profile/:id').get(getUserDetails);
 
 router.route('/user/:email').get(getUserByEmail);
 
