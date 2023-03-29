@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {createUser,loginUser,logout,getUserDetails,getAllUsers} = require('../Controller/UserController.js');
+const {createUser,loginUser,logout,getUserDetails,getAllUser,getUserByEmail } = require('../Controller/UserController.js');
 
 const {isAuthenticatedUser,authorizeRoles} = require('../middleware/auth.js');
 
@@ -10,6 +10,7 @@ router.post('/login', loginUser);
 router.get('/logout',logout);
 
 router.route('/profile/:id').get(isAuthenticatedUser,getUserDetails);
-router.route('/users').get(isAuthenticatedUser,getAllUsers);
+
+router.route('/user/:email').get(getUserByEmail);
 
 module.exports = router;

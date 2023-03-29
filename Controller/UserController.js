@@ -3,9 +3,7 @@ const User =require("../Models/UserModel")
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const sendToken = require("../utils/JwtToken");
 
-
-
-
+const ErrorHander=require("../utils/ErrorHander")
 
 
 exports.createUser = catchAsyncErrors(async (req, res, next) => {
