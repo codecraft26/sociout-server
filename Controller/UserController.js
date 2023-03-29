@@ -95,3 +95,17 @@ exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
 }
 );
 
+exports.getUserByEmail = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findOne({ email: req.params.email });
+
+  if (!user) {
+    return next(
+      new ErrorHander(`User does not exist with email: ${req.params.email}`)
+    );
+  }
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
+});
