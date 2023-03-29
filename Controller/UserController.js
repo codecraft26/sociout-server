@@ -3,6 +3,11 @@ const User =require("../Models/UserModel")
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const sendToken = require("../utils/JwtToken");
 
+
+
+
+
+
 exports.createUser = catchAsyncErrors(async (req, res, next) => {
 
 
@@ -61,3 +66,32 @@ exports.logout = catchAsyncErrors(async (req, res, next) => {
 }
 
 );
+
+// Get User Detail
+exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+
+
+  const {email ,name ,role} = user;
+  if (!user) {
+    return next(
+      new ErrorHander(`User does not exist with Id: ${req.params.id}`)
+    );
+  }
+
+  res.status(200).json({
+    success: true,
+   user: {email ,name ,role,createdAt:user.createdAt}
+  });
+});
+
+exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
+  const users = await User.find();
+
+  res.status(200).json({
+    success: true,
+    users,
+  });
+}
+);
+
