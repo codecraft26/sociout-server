@@ -19,7 +19,7 @@ router.route('/logout').get(logout);
 router.route('/update').put(isAuthenticatedUser,getUserDetails);
 // route for getalluser
 
-router.route('/alluser').get(isAuthenticatedUser,authorizeRoles('admin'),getAllUser);
+router.route('/all').get(isAuthenticatedUser,authorizeRoles('admin'),getAllUser);
 
 
     

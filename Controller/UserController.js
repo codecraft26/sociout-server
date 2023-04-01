@@ -137,6 +137,7 @@ exports.updateUser = catchAsyncErrors(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
+    user,
   });
 }
 );
@@ -150,6 +151,10 @@ exports.getAllUser = catchAsyncErrors(async (req, res, next) => {
   });
 }
 );
+
+
+
+     
 
 
 
