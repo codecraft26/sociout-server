@@ -31,6 +31,10 @@ eventEmitter.on('userCreated', async (user) => {
 
 
     const { name, email, password} = req.body;
+
+    try{
+
+    
   
     const user = await User.create({
       name,
@@ -45,6 +49,17 @@ eventEmitter.on('userCreated', async (user) => {
     });
   
     sendToken(user, 201, res);
+  }
+  catch(err){
+    return next(
+      res.status(500).json({
+        success: false,
+        message: err.message
+      })
+      
+    )
+  }
+
     // Emitting the event
     eventEmitter.emit('userCreated', user);
   });
@@ -61,13 +76,13 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findOne({ email }).select("+password");
 
   if (!user) {
-    return next(new ErrorHander("Invalid email or password", 401));
+    return next("user not exists");
   }
 
   const isPasswordMatched = await user.comparePassword(password);
 
   if (!isPasswordMatched) {
-    return next(new ErrorHander("Invalid email or password", 401));
+    return next("password not matched");
   }
 
   sendToken(user, 200, res);
@@ -137,6 +152,7 @@ exports.updateUser = catchAsyncErrors(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
+    user,
   });
 }
 );
@@ -150,6 +166,12 @@ exports.getAllUser = catchAsyncErrors(async (req, res, next) => {
   });
 }
 );
+
+
+
+
+
+     
 
 
 

@@ -18,4 +18,6 @@ const userRoutes = require('./Routes/userRoutes');
 
 app.use('/api/v1', userRoutes);
 
+app.use('/theatre', require('./Routes/TheatreRoute'));
+
 module.exports = app;
