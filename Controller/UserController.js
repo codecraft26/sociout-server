@@ -9,6 +9,7 @@ const sendEmail = require('../utils/sendEmail');
 
 
 exports.createUser = catchAsyncErrors(async (req, res, next) => {
+  const { name, email, password} = req.body;
 // Creating a new event emitter instance
 const eventEmitter = new EventEmitter();
 
@@ -19,9 +20,12 @@ eventEmitter.on('userCreated', async (user) => {
     await sendEmail({
       email: user.email,
       subject: 'Welcome to our platform!',
-      message: `Dear ${user.name}, welcome to our platform!`,
-      html: `<h1>Dear ${user.name}, welcome to our platform! to explore more visit </h1>`
+     template: './views/welcome.pug'
     });
+
+
+
+    console.log('Email sent successfully! on '+{email});
   } catch (error) {
     console.error(error);
   }
@@ -30,7 +34,7 @@ eventEmitter.on('userCreated', async (user) => {
 
 
 
-    const { name, email, password} = req.body;
+
 
     try{
 
@@ -49,6 +53,9 @@ eventEmitter.on('userCreated', async (user) => {
     });
   
     sendToken(user, 201, res);
+    eventEmitter.emit('userCreated', user);
+    
+
   }
   catch(err){
     return next(
