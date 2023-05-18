@@ -14,3 +14,14 @@ app.listen(process.env.PORT, () => {
     console.log(`Server running on port ${process.env.PORT}`);
 });
 
+app.set('view engine', 'pug');
+
+// Set the views directory
+app.set('views', './views');
+
+app.get('/',(req,res)=>{
+
+
+    res.send("server is running")
+}
+)
