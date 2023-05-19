@@ -23,7 +23,7 @@ eventEmitter.on('userCreated', async (user) => {
      template: './views/welcome.pug'
     });
 
-
+// found error for this
 
     console.log('Email sent successfully! on '+{email});
   } catch (error) {
