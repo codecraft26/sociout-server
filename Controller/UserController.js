@@ -176,6 +176,19 @@ exports.getAllUser = catchAsyncErrors(async (req, res, next) => {
 
 
 
+//create a conroller for sort the user by name
+exports.sortUserByName = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.find().sort({name:1});
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
+}
+);
+  
+
+
 
 
      
