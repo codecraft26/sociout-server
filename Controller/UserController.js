@@ -187,7 +187,19 @@ exports.sortUserByName = catchAsyncErrors(async (req, res, next) => {
 }
 );
   
+//search user y email
+exports.searchUserByEmail = catchAsyncErrors(async (req, res, next) => {
 
+const User=await User.find({email:{$regex:req.params.email,$options:'i'}})
+
+  res.status(200).json({
+    success: true,
+    User,
+
+
+})
+}
+);
 
 
 
