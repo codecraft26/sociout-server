@@ -201,7 +201,16 @@ const User=await User.find({email:{$regex:req.params.email,$options:'i'}})
 }
 );
 
+//delete user by id
+exports.deleteUserById = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findByIdAndDelete(req.params.id);
 
+  res.status(200).json({
+    success: true,
+    user,
+  });
+}
+);
 
      
 
