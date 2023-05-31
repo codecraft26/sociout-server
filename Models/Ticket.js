@@ -14,6 +14,8 @@ const ticketSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  
+  // for seat
   seatNumber: {
     type: String,
     required: true,
